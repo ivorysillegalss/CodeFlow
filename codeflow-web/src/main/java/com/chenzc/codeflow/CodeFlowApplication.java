@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.chenzc.codeflow.mapper")
+//@MapperScan("com.chenzc.codeflow.mapper")
 public class CodeFlowApplication {
 
     public static void main(String[] args) {
