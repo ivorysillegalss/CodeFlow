@@ -3,27 +3,121 @@
          xsi:schemaLocation="https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.chenzc.codeflow</groupId>
-        <artifactId>OnlineJudge</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>pom</packaging>
+    <modules>
+        <module>codeflow-common</module>
+        <module>codeflow-handler</module>
+    </modules>
 
-    <artifactId>codeflow-web</artifactId>
+    <groupId>com.chenzc.codeflow</groupId>
+    <artifactId>OnlineJudge</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
-    <name>web</name>
-    <description>web</description>
-
+    <name>OnlineJudge</name>
+    <description>OnlineJudge</description>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
+:wq
+iiii
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
 
         <dependency>
-            <groupId>org.chenzc</groupId>
-            <artifactId>codeflow-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.15</version>
+        </dependency>
+
+
+        <!--            hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.15</version>
+        </dependency>
+
+        <!--                lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--guava工具包-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+        </dependency>
+
+        <!--fastjson包-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.14.0</version>
+>>>>>>> db128bd (add: 分解为多模块开发，责任链完成大致校验流程)
         </dependency>
     </dependencies>
 
