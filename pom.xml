@@ -23,8 +23,6 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-:wq
-iiii
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -117,7 +115,6 @@ iiii
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.14.0</version>
->>>>>>> db128bd (add: 分解为多模块开发，责任链完成大致校验流程)
         </dependency>
     </dependencies>
 
