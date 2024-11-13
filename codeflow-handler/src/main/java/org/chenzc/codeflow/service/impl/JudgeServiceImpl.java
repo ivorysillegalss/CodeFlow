@@ -29,6 +29,7 @@ public class JudgeServiceImpl implements JudgeService {
                 .language(submission.getLanguage())
                 .code(submission.getCode())
                 .ip(ServletUtils.getClientIpAddress(request))
+//                .ip(ServletUtils.getClientIpAddress(request))
 //                                                     TODO   .contestPassword()
                 .build();
 
