@@ -2,6 +2,7 @@ package com.chenzc.codeflow.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.chenzc.codeflow.enums.AbstractEnums;
 
 @Getter
 @AllArgsConstructor

@@ -14,6 +14,7 @@ public class SubmissionController {
     private JudgeService judgeService;
 
     @PostMapping("/submission")
+//    TODO 定义登录注解拦截器TBD
     public BasicResult applySubmission(@RequestBody Submission submission) {
         return judgeService.commitJudge(submission);
     }

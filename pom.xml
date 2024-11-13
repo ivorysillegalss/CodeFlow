@@ -8,17 +8,23 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>codeflow-handler</artifactId>
+    <artifactId>codeflow-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>handler</name>
-    <description>handler</description>
+    <name>web</name>
+    <description>web</description>
 
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
 
+        <dependency>
+            <groupId>org.chenzc</groupId>
+            <artifactId>codeflow-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
