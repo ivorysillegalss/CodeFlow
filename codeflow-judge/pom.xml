@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.chenzc</groupId>
-    <artifactId>codeflow-handler</artifactId>
+    <artifactId>codeflow-judge</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,27 +25,10 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.56</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>10.1.24</version>
+            <groupId>io.github.lyh200</groupId>
+            <artifactId>dynamic-tp-core</artifactId>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

@@ -59,7 +59,7 @@ public class CheckContestTask implements TaskNodeModel<CommitTask> {
         Contest contest = CollUtil.getFirst(contests);
 //            如果是密码保护的比赛 验证密码
         if (contest.getContestType().equals(ContestType.PASSWORD_PROTECTED_CONTEST.getMessage())) {
-            if (contest.getPassword().equals(taskContext.getBusinessContextData().getPassword())) {
+            if (contest.getPassword().equals(taskContext.getBusinessContextData().getContestPassword())) {
                 taskContext.setException(Boolean.TRUE).setResponse(TaskContextResponse.
                         <CommitTask>builder()
                         .error("Wrong password or password expired")
