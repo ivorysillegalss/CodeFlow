@@ -3,6 +3,7 @@ package org.chenzc.codeflow.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.chenzc.codeflow.domain.Submission;
 import org.chenzc.codeflow.domain.User;
 
 @Builder
@@ -18,7 +19,7 @@ public class CommitTask extends TaskContextData {
     private Integer problemId;
 
     private Boolean isContest;
-    private String password;
+    private String contestPassword;
 
     private String sessionId;
     private User user;
@@ -26,4 +27,5 @@ public class CommitTask extends TaskContextData {
 
     private String submissionId;
     private String ip;
+    private Submission submission;
 }

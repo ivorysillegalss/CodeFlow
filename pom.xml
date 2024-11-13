@@ -12,6 +12,7 @@
     <modules>
         <module>codeflow-common</module>
         <module>codeflow-handler</module>
+        <module>codeflow-judge</module>
     </modules>
 
     <groupId>com.chenzc.codeflow</groupId>

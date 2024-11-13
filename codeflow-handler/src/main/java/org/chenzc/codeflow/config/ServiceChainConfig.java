@@ -2,6 +2,8 @@ package org.chenzc.codeflow.config;
 
 import jakarta.annotation.Resource;
 import org.chenzc.codeflow.enums.BusinessEnums;
+import org.chenzc.codeflow.task.CheckContestTask;
+import org.chenzc.codeflow.task.CheckProblemTask;
 import org.chenzc.codeflow.task.PreCheckTask;
 import org.chenzc.codeflow.template.TaskController;
 import org.chenzc.codeflow.template.TaskTemplate;
@@ -25,25 +27,23 @@ public class ServiceChainConfig {
     @Resource
     private PreCheckTask preCheckTask;
     @Resource
-    private AssembleInfoTask assembleInfoTask;
+    private CheckContestTask checkContestTask;
     @Resource
-    private AfterCheckTask afterCheckTask;
-    @Resource
-    private SendMqTask sendMqTask;
+    private CheckProblemTask checkProblemTask;
 
-    @Bean("sendTemplate")
-    public TaskTemplate sendTemplate() {
+    @Bean("commitTemplate")
+    public TaskTemplate commitTemplate() {
         return TaskTemplate.builder()
-                .taskTemplate(Arrays.asList(preCheckTask, assembleInfoTask, afterCheckTask, sendMqTask))
+                .taskTemplate(Arrays.asList(preCheckTask, checkContestTask, checkProblemTask))
                 .build();
     }
 
-    @Bean("ServiceTaskController")
+    @Bean("CommitTaskController")
     public TaskController taskController() {
         TaskController taskController = TaskController.builder().build();
         Map<String, TaskTemplate> taskTemplates = new HashMap<>();
 //        由于设计原因 不同的链子（不同的TaskTemplate中） 所对应的上下文数据类型不相同
-        taskTemplates.put(BusinessEnums.COMMIT.getCode(), sendTemplate());
+        taskTemplates.put(BusinessEnums.COMMIT.getCode(), commitTemplate());
         taskController.setTaskTemplates(taskTemplates);
         return taskController;
     }

@@ -8,7 +8,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.chenzc.codeflow.domain.Submission;
-import org.chenzc.codeflow.domain.User;
 import org.chenzc.codeflow.entity.CommitTask;
 import org.chenzc.codeflow.entity.Problem;
 import org.chenzc.codeflow.entity.TaskContext;
@@ -20,7 +19,6 @@ import org.chenzc.codeflow.mapper.SubmissionMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 @Slf4j
@@ -37,7 +35,6 @@ public class CheckProblemTask implements TaskNodeModel<CommitTask> {
         CommitTask commitTask = taskContext.getBusinessContextData();
         QueryWrapper<Problem> qw = new QueryWrapper<>();
         qw.eq("problem_id", commitTask.getProblemId())
-//                TODO
                 .eq("contest_id", commitTask.getContestId())
                 .eq("visible", Boolean.TRUE);
         List<Problem> problems = problemMapper.selectList(qw);
@@ -65,18 +62,7 @@ public class CheckProblemTask implements TaskNodeModel<CommitTask> {
                 .ip(commitTask.getIp())
                 .build();
         submissionMapper.insert(submission);
-
-//        TODO 此处线程池send任务
-
-
-        TaskContextResponse<CommitTask> successResp = TaskContextResponse
-                .<CommitTask>builder().code(RespEnums.SUCCESS.getCode()).build();
-        if (commitTask.getIsHide()) {
-            taskContext.setResponse(successResp);
-        } else {
-            successResp.setData(CommitTask.builder().submissionId(submission.getSubmissionId()).build());
-            taskContext.setResponse(successResp);
-        }
+        taskContext.getBusinessContextData().setSubmission(submission);
     }
 
     private static void setException(TaskContext<CommitTask> taskContext, String error) {
