@@ -25,4 +25,5 @@ public class CommitTask extends TaskContextData {
     private Boolean isHide;
 
     private String submissionId;
+    private String ip;
 }

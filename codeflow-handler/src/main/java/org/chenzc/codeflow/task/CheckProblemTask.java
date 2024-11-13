@@ -62,8 +62,7 @@ public class CheckProblemTask implements TaskNodeModel<CommitTask> {
                 .problemId(commitTask.getProblemId())
                 .contestId(commitTask.getContestId())
                 .username(commitTask.getUser().getUsername())
-//                TODO 获取ip？
-//                .ip()
+                .ip(commitTask.getIp())
                 .build();
         submissionMapper.insert(submission);
 
