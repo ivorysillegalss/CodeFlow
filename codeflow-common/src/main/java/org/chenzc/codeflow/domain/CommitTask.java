@@ -1,10 +1,11 @@
-package org.chenzc.codeflow.entity;
+package org.chenzc.codeflow.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.chenzc.codeflow.domain.Submission;
 import org.chenzc.codeflow.domain.User;
+import org.chenzc.codeflow.entity.TaskContextData;
 
 @Builder
 @Getter
@@ -27,5 +28,8 @@ public class CommitTask extends TaskContextData {
 
     private String submissionId;
     private String ip;
+
+    private Problem problem;
+    private Contest contest;
     private Submission submission;
 }

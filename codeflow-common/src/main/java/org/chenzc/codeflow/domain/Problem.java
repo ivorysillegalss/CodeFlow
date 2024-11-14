@@ -1,9 +1,8 @@
-package org.chenzc.codeflow.entity;
+package org.chenzc.codeflow.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.chenzc.codeflow.domain.User;
 
 import java.time.LocalDateTime;
 

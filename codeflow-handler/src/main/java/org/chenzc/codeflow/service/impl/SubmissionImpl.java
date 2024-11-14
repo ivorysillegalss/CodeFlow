@@ -3,11 +3,11 @@ package org.chenzc.codeflow.service.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.chenzc.codeflow.domain.BasicResult;
 import org.chenzc.codeflow.domain.Submission;
-import org.chenzc.codeflow.entity.CommitTask;
+import org.chenzc.codeflow.domain.CommitTask;
 import org.chenzc.codeflow.entity.TaskContext;
 import org.chenzc.codeflow.entity.TaskContextData;
 import org.chenzc.codeflow.enums.BusinessEnums;
-import org.chenzc.codeflow.service.JudgeService;
+import org.chenzc.codeflow.service.SubmissionService;
 import org.chenzc.codeflow.template.TaskController;
 import org.chenzc.codeflow.utils.ServletUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JudgeServiceImpl implements JudgeService {
+public class SubmissionImpl implements SubmissionService {
 
     @Autowired
     @Qualifier("CommitTaskController")

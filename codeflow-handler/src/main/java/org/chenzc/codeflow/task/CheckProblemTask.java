@@ -8,8 +8,8 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.chenzc.codeflow.domain.Submission;
-import org.chenzc.codeflow.entity.CommitTask;
-import org.chenzc.codeflow.entity.Problem;
+import org.chenzc.codeflow.domain.CommitTask;
+import org.chenzc.codeflow.domain.Problem;
 import org.chenzc.codeflow.entity.TaskContext;
 import org.chenzc.codeflow.entity.TaskContextResponse;
 import org.chenzc.codeflow.enums.RespEnums;
@@ -33,16 +33,25 @@ public class CheckProblemTask implements TaskNodeModel<CommitTask> {
     @Override
     public void execute(TaskContext<CommitTask> taskContext) {
         CommitTask commitTask = taskContext.getBusinessContextData();
+
         QueryWrapper<Problem> qw = new QueryWrapper<>();
         qw.eq("problem_id", commitTask.getProblemId())
-                .eq("contest_id", commitTask.getContestId())
                 .eq("visible", Boolean.TRUE);
+
+        if (commitTask.getIsContest()) {
+            qw.eq("contest_id", commitTask.getContestId());
+        }
+
         List<Problem> problems = problemMapper.selectList(qw);
         if (CollUtil.isEmpty(problems)) {
+            log.error(org.apache.tomcat.util.buf.StringUtils.join("error judging problem, nil problem for id: ",
+                    String.valueOf(commitTask.getProblemId())));
             setException(taskContext, "Problem not exist");
             return;
         }
         Problem problem = CollUtil.getFirst(problems);
+
+        commitTask.setProblem(problem);
 
         List<String> languages = JSON.parseArray(problem.getLanguages(), String.class);
         boolean isLanguageExist = languages

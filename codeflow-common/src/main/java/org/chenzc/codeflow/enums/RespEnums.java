@@ -18,6 +18,8 @@ public enum RespEnums implements AbstractEnums{
     CLIENT_BAD_VARIABLES("-1","参数解析错误"),
     CLIENT_BAD_PARAMETERS("2","含接受者的参数列表为空"),
 
+    USER_BE_BANNED("-3","用户被封禁"),
+
     PASSWORD_CHECK_ERROR("3","密码鉴权失败"),
 
     CONTEST_NOT_START("-1","比赛尚未开始"),

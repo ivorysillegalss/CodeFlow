@@ -34,6 +34,12 @@
             <artifactId>tomcat-embed-core</artifactId>
             <version>10.1.24</version>
         </dependency>
+        <dependency>
+            <groupId>org.chenzc</groupId>
+            <artifactId>codeflow-judge</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

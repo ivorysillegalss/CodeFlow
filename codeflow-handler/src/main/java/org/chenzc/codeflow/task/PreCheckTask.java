@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.chenzc.codeflow.constant.CommonConstant;
 import org.chenzc.codeflow.constant.RedisConstants;
 import org.chenzc.codeflow.domain.User;
-import org.chenzc.codeflow.entity.CommitTask;
+import org.chenzc.codeflow.domain.CommitTask;
 import org.chenzc.codeflow.entity.TaskContext;
 import org.chenzc.codeflow.entity.TaskContextResponse;
 import org.chenzc.codeflow.enums.RespEnums;
@@ -56,6 +56,14 @@ public class PreCheckTask implements TaskNodeModel<CommitTask> {
 
         User user = JSON.parseObject(jsonUser, User.class);
         taskContext.getBusinessContextData().setUser(user);
+
+        if (user.getIsDisabled()) {
+            taskContext.setException(Boolean.TRUE)
+                    .setResponse(TaskContextResponse.<CommitTask>builder()
+                            .error("User has been banned")
+                            .code(RespEnums.USER_BE_BANNED.getCode())
+                            .build());
+        }
 
 
         Integer contestId = commitTask.getContestId();

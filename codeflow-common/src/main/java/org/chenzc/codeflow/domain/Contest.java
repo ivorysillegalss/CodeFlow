@@ -1,4 +1,4 @@
-package org.chenzc.codeflow.entity;
+package org.chenzc.codeflow.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
