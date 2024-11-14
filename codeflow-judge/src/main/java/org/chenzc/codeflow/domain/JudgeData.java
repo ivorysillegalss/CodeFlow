@@ -15,8 +15,8 @@ public class JudgeData {
     private String testCaseId;
     private Boolean output;
     private String spjVersion;
-    private String spjConfig;
-    private String spjCompileConfig;
+    private SpjConfig spjConfig;
+    private CompileConfig spjCompileConfig;
     private String spjSrc;
     private String ioMode;
 }

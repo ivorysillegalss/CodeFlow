@@ -8,4 +8,8 @@ public class JudgeConstant {
     public static final String SERVER_NORMAL_STATUS = "normal";
 
     public static final String SERVER_ABNORMAL_STATUS = "abnormal";
+
+    public static final String JUDGE_SERVICE_ENDPOINT= "/judge";
+
+    public static final String JUDGE_SERVER_TOKEN = "CHANGE_THIS";
 }

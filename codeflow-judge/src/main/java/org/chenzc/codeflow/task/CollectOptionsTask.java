@@ -23,9 +23,6 @@ import java.util.*;
 public class CollectOptionsTask implements TaskNodeModel<JudgeTask> {
 
     @Resource
-    private ServerUtil serverUtil;
-
-    @Resource
     private SysOptionsMapper sysOptionsMapper;
 
     @Override
@@ -88,26 +85,5 @@ public class CollectOptionsTask implements TaskNodeModel<JudgeTask> {
         judgeTask.setSubmission(submission);
 
 
-//        JudgeData judgeData = assembleJudgeData(submission, problem, spjConfig, language);
-
-        JudgeServer judgeServer = serverUtil.getJudgeServer();
-        if (Objects.nonNull(judgeServer)) {
-            serverUtil.afterJudgeServerGet(judgeServer);
-        }
-//        TODO 将任务打入缓冲队列等待
-    }
-
-    public static JudgeData assembleJudgeData(Submission submission, Problem problem, HashMap<String, String> spjConfig, String language) {
-        return JudgeData.builder().languageConfig(language)
-                .src(submission.getCode())
-                .maxMemory(JudgeConstant.DEFAULT_MAX_MEMORY_PRE * problem.getMemoryLimit())
-                .maxCpuTime(problem.getTimeLimit())
-                .testCaseId(problem.getTestCaseId())
-                .output(Boolean.FALSE)
-                .spjVersion(problem.getSpjVersion())
-                .spjConfig(spjConfig.get("config"))
-                .spjCompileConfig(spjConfig.get("compile"))
-                .spjSrc(problem.getSpjCode())
-                .ioMode(problem.getIoMode()).build();
     }
 }

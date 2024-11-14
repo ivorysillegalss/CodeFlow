@@ -5,6 +5,7 @@ import org.chenzc.codeflow.enums.BusinessEnums;
 import org.chenzc.codeflow.task.CheckContestTask;
 import org.chenzc.codeflow.task.CheckProblemTask;
 import org.chenzc.codeflow.task.PreCheckTask;
+import org.chenzc.codeflow.task.SendJudgeTask;
 import org.chenzc.codeflow.template.TaskController;
 import org.chenzc.codeflow.template.TaskTemplate;
 import org.springframework.context.annotation.Bean;
@@ -30,11 +31,13 @@ public class ServiceChainConfig {
     private CheckContestTask checkContestTask;
     @Resource
     private CheckProblemTask checkProblemTask;
+    @Resource
+    private SendJudgeTask sendJudgeTask;
 
     @Bean("commitTemplate")
     public TaskTemplate commitTemplate() {
         return TaskTemplate.builder()
-                .taskTemplate(Arrays.asList(preCheckTask, checkContestTask, checkProblemTask))
+                .taskTemplate(Arrays.asList(preCheckTask, checkContestTask, checkProblemTask, sendJudgeTask))
                 .build();
     }
 
