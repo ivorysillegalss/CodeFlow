@@ -48,7 +48,8 @@ public class Submission {
     /**
      * 同为json字符串 格式为：
      * {"time_cost": 2,
-     * "memory_cost": 1630208
+     * "memory_cost": 1630208,
+     * "err_info": "",
      * }
      */
     private String staticInfo;

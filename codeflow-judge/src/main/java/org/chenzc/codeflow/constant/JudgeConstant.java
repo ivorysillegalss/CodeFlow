@@ -12,4 +12,8 @@ public class JudgeConstant {
     public static final String JUDGE_SERVICE_ENDPOINT= "/judge";
 
     public static final String JUDGE_SERVER_TOKEN = "CHANGE_THIS";
+
+    public static final Integer JUDGE_ZERO_SCORE = 0;
+
+    public static final Integer ACCEPTED_JUDGE_CASE = -1;
 }

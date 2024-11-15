@@ -18,6 +18,8 @@ public class Problem {
     private String samples;
 
     private String testCaseId;
+
+//    TODO 同json字符串
     private String testCaseScore;
     private String hint;
 
