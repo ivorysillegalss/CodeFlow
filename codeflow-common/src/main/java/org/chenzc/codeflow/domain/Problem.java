@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 public class Problem {
+    private String _id;
     private String id;
     private String title;
     private String description;
@@ -19,13 +20,13 @@ public class Problem {
 
     private String testCaseId;
 
-//    TODO 同json字符串
+    //    TODO 同json字符串
     private String testCaseScore;
     private String hint;
 
     private String languages;
 
-//    此处的Template是各语言的模板 本质上是一个map
+    //    此处的Template是各语言的模板 本质上是一个map
 //    序列化后成为json键值对字符串
     private String template;
 

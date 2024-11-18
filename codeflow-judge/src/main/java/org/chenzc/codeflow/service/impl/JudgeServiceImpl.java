@@ -29,6 +29,7 @@ public class JudgeServiceImpl implements JudgeService {
     @Override
     public void send(CommitTask commitTask) {
         JudgeTask judgeTask = JudgeTask.builder()
+                .isContest(commitTask.getIsContest())
                 .submission(commitTask.getSubmission())
                 .problem(commitTask.getProblem())
                 .language(commitTask.getLanguage())

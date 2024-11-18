@@ -11,6 +11,7 @@ import org.chenzc.codeflow.entity.TaskContextData;
 @Setter
 @Accessors(chain = true)
 public class JudgeTask extends TaskContextData {
+    private Boolean isContest;
     private Submission submission;
     private Problem problem;
     private String language;

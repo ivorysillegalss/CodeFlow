@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.chenzc.codeflow.constant.JudgeConstant;
 import org.chenzc.codeflow.domain.JudgeServer;
 import org.chenzc.codeflow.mapper.JudgeServerMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class ServerUtil {
     private JudgeServerMapper judgeServerMapper;
 
     @Transactional
+    @Bean
     public JudgeServer getJudgeServer() {
         QueryWrapper<JudgeServer> qw = new QueryWrapper<>();
         qw.orderBy(true, true, "task_number");
@@ -48,6 +50,7 @@ public class ServerUtil {
     }
 
     @Transactional
+    @Bean
     public void afterJudgeServerGet(JudgeServer server) {
         server.setTaskNumber(server.getTaskNumber() - 1);
         judgeServerMapper.updateById(server);
