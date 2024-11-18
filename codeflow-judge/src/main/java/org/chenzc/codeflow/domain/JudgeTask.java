@@ -2,6 +2,7 @@ package org.chenzc.codeflow.domain;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.chenzc.codeflow.entity.TaskContextData;
 
 @Builder
@@ -18,4 +19,5 @@ public class JudgeTask extends TaskContextData {
     private JudgeServer judgeServer;
     private JudgeData judgeData;
     private User user;
+    private JudgeResp judgeResp;
 }

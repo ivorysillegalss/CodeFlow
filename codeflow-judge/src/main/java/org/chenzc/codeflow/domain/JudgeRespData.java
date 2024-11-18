@@ -10,7 +10,11 @@ import lombok.Data;
 public class JudgeRespData {
     private String testCase;
     private Integer cpuTime;
+    private Integer realTime;
     private Integer memory;
+    private Integer signal;
+    private Integer exitCode;
+    private String error;
     private Integer result;
     private Integer score;
 }

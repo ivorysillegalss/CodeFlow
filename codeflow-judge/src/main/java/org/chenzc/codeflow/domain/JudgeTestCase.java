@@ -8,5 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class JudgeTestCase {
-    private String result;
+    private Integer score;
+    private String inputName;
+    private String outputName;
 }
