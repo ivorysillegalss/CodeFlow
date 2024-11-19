@@ -43,11 +43,21 @@ public class RedisUtils {
 
     /**
      * get
+     *
      * @param k
      * @return {@link String }
      */
     public String get(String k) {
         return redisTemplate.opsForValue().get(k);
+    }
+
+    /**
+     * del
+     * @param k
+     * @return {@link Boolean }
+     */
+    public Boolean del(String k) {
+        return redisTemplate.delete(k);
     }
 
     /**

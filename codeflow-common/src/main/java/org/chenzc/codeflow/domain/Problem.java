@@ -53,12 +53,21 @@ public class Problem {
     private Integer createdById;
     private User createdBy;
 
+    /**
+     * 0 一般表示“Accepted”或“通过”，即解答正确。
+     * -1 通常代表“Wrong Answer”或“答案错误”。
+     * 负值如 -2 可能表示“Time Limit Exceeded”或其他错误状态（例如内存超限等）。
+     * 正值如 4 或其他数字可能用于表示编译错误或特定类型的错误。
+     *
+     * @as HashMap<String, Integer>
+     */
     private String statisticInfo;
     private int totalScore;
 
     private Boolean isPublic;
 
     private Integer contestId;
+//    TODO 将Contest对象从 Problem中抽离出来
     private Contest contest;
 
     private String ioMode;

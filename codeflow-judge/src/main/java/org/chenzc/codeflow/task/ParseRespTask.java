@@ -59,6 +59,7 @@ public class ParseRespTask implements TaskNodeModel<JudgeTask> {
             }
         }
 
+        judgeTask.setJudgeStaticInfo(judgeStaticInfo);
         String jsonStaticInfo = JSON.toJSONString(judgeStaticInfo);
         submission.setStaticInfo(jsonStaticInfo);
 
@@ -97,7 +98,7 @@ public class ParseRespTask implements TaskNodeModel<JudgeTask> {
                     }
                 }
             } catch (IndexOutOfBoundsException e) {
-                log.error("Index Error raised when summing up the score in problem,id : {}",problem.getId());
+                log.error("Index Error raised when summing up the score in problem,id : {}", problem.getId());
                 score = 0;
             }
         }

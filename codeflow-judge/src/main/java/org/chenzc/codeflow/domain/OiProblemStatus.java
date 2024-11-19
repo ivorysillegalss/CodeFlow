@@ -9,7 +9,7 @@ import java.util.HashMap;
 @Builder
 @Data
 @AllArgsConstructor
-public class AcmProblemStatus {
+public class OiProblemStatus {
     private HashMap<String, ProblemStatus> contestProblems;
     private HashMap<String, ProblemStatus> problems;
 }

@@ -21,4 +21,6 @@ public class JudgeTask extends TaskContextData {
     private JudgeData judgeData;
     private User user;
     private JudgeResp judgeResp;
+    private JudgeStaticInfo judgeStaticInfo;
+    private ContestRank contestRank;
 }

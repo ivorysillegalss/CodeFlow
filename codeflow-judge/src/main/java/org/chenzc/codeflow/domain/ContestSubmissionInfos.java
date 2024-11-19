@@ -6,10 +6,14 @@ import lombok.Data;
 
 import java.util.HashMap;
 
+/**
+ * @author chenz
+ * @date 2024/11/19
+ * @see ContestRank
+ */
 @Builder
 @Data
 @AllArgsConstructor
-public class AcmProblemStatus {
-    private HashMap<String, ProblemStatus> contestProblems;
-    private HashMap<String, ProblemStatus> problems;
+public class ContestSubmissionInfos {
+    public HashMap<String, ContestSubmissionInfo> submissionInfos;
 }
