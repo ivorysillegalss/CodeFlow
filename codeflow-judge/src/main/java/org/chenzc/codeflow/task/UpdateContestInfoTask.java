@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.chenzc.codeflow.constant.CommonConstant;
 import org.chenzc.codeflow.constant.ContestConstant;
+import org.chenzc.codeflow.constant.JudgeConstant;
 import org.chenzc.codeflow.domain.*;
 import org.chenzc.codeflow.entity.TaskContext;
 import org.chenzc.codeflow.enums.ContestRuleType;
@@ -24,6 +25,8 @@ import org.chenzc.codeflow.utils.RedisUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -97,11 +100,6 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
                                 .status(submissionResult)
                                 ._id(_id)
                                 .build());
-
-////                更新accept题目数
-//                if (submission.getResult().toString().equals(JudgeStatus.ACCEPTED.getCode())){
-//                    userProfile.setAcceptedNumber(userProfile.getAcceptedNumber() + 1);
-//                }
 
 //                如果之前有提交过 但是没有accept
             } else if (!problemStatus.getStatus().equals(Integer.parseInt(JudgeStatus.ACCEPTED.getCode()))) {
@@ -207,30 +205,82 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
         return userRank;
     }
 
-    private static void updateAcmContestRank(JudgeTask judgeTask) {
+    //        调用这个地方的方法 应该更新problem的信息 应为会存在并发等问题
+    private static void updateAcmContestRank(JudgeTask judgeTask, ContestRuleType ruleType, BaseMapper<AcmContestRank> acmContestRankBaseMapper) {
         ContestRank contestRank = judgeTask.getContestRank();
-        String submissionInfoStr = contestRank.getSubmissionInfo();
+        Submission submission = judgeTask.getSubmission();
         Problem problem = judgeTask.getProblem();
+        Contest contest = problem.getContest();
+        Integer submissionResult = submission.getResult();
+        ContestSubmissionInfo info;
+
+        String submissionInfoStr = contestRank.getSubmissionInfo();
         HashMap<String, ContestSubmissionInfo> submissionInfo = JSON.parseObject(submissionInfoStr, new TypeReference<>() {
         });
 
         String problemId = problem.getId();
 //        此题提交过
         if (submissionInfo.containsKey(problemId)) {
-            ContestSubmissionInfo info = submissionInfo.get(problemId);
+            info = submissionInfo.get(problemId);
             if (info.getIsAc()) {
                 log.info("this problem {} has been solved", problemId);
                 return;
             }
             contestRank.setSubmissionNumber(contestRank.getSubmissionNumber() + 1);
 
-//            TODO
+            if (submissionResult.equals(Integer.parseInt(JudgeStatus.ACCEPTED.getCode()))) {
+                if (ContestRuleType.ACM.getCode().equals(judgeTask.getRuleType())) {
+                    AcmContestRank rank = (AcmContestRank) contestRank;
+                    double v = Duration.between(submission.getCreateTime(), contest.getStartTime()).toNanos() / 1_000_000_000.0;
+                    info.setIsAc(Boolean.TRUE)
+                            .setAcTime((float) (v));
+                    rank.setAcceptedNumber(rank.getAcceptedNumber() + 1)
+                            .setTotalTime(info.getAcTime() + info.getErrorNumber() * 20 * 60);
+
+//                    在updateContestProblemStatus此函数处 已对problem的AC数量做了更改
+                    if (problem.getAcceptedNumber().equals(JudgeConstant.FIRST_AC)) {
+                        info.setIsFirstAc(Boolean.TRUE);
+                    }
+                }
+
+            } else if (!submissionResult.equals(Integer.parseInt(JudgeStatus.COMPILE_ERROR.getCode()))) {
+                info.setErrorNumber(info.getErrorNumber() + 1);
+            }
 
 
         } else {
-//           此题未提交过
+//           此题未提交过 用户第一次提交
+            contestRank.setSubmissionNumber(contestRank.getSubmissionNumber() + 1);
+            info = ContestSubmissionInfo.builder()
+                    .isAc(Boolean.FALSE)
+                    .isFirstAc(Boolean.FALSE).build();
+
+            if (submissionResult.equals(Integer.parseInt(JudgeStatus.ACCEPTED.getCode()))) {
+                if (ContestRuleType.ACM.getCode().equals(judgeTask.getRuleType())) {
+                    AcmContestRank rank = (AcmContestRank) contestRank;
+                    rank.setAcceptedNumber(rank.getAcceptedNumber() + 1);
+
+                    info.setIsAc(Boolean.TRUE)
+                            .setAcTime(info.getAcTime() + info.getErrorNumber() * 20 * 60);
+                    rank.setTotalTime(info.getAcTime() + rank.getTotalTime());
+
+//                    在updateContestProblemStatus此函数处 已对problem的AC数量做了更改
+                    if (problem.getAcceptedNumber().equals(JudgeConstant.FIRST_AC)) {
+                        info.setIsFirstAc(Boolean.TRUE);
+                    }
+                }
+            } else if (!submissionResult.equals(Integer.parseInt(JudgeStatus.COMPILE_ERROR.getCode()))) {
+                info.setErrorNumber(info.getErrorNumber() + 1);
+            }
         }
+        Integer updateId = submission.getProblemId();
+        submissionInfo.put(String.valueOf(updateId), info);
+        String jsonString = JSON.toJSONString(submissionInfo);
+        contestRank.setSubmissionInfo(jsonString);
+        AcmContestRank rank = (AcmContestRank) contestRank;
 
+        if (ContestRuleType.ACM.getCode().equals(judgeTask.getRuleType())) {
+            acmContestRankBaseMapper.updateById(rank);
+        }
     }
-
 }

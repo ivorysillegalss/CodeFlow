@@ -47,8 +47,8 @@ public class Problem {
     private Boolean visible;
     private String difficulty;
     private String source;
-    private long submissionNumber;
-    private long acceptedNumber;
+    private Long submissionNumber;
+    private Long acceptedNumber;
 
     private Integer createdById;
     private User createdBy;

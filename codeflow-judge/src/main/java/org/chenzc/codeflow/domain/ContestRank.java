@@ -1,6 +1,7 @@
 package org.chenzc.codeflow.domain;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 public class ContestRank {

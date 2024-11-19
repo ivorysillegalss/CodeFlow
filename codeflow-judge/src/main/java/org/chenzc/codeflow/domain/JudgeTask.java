@@ -23,4 +23,6 @@ public class JudgeTask extends TaskContextData {
     private JudgeResp judgeResp;
     private JudgeStaticInfo judgeStaticInfo;
     private ContestRank contestRank;
+//    TODO
+    private String ruleType;
 }

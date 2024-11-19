@@ -16,4 +16,6 @@ public class JudgeConstant {
     public static final Integer JUDGE_ZERO_SCORE = 0;
 
     public static final Integer ACCEPTED_JUDGE_CASE = -1;
+
+    public static final Long FIRST_AC = 1L;
 }
