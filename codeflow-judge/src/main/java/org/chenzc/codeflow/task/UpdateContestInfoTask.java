@@ -29,6 +29,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -206,12 +207,13 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
     }
 
     //        调用这个地方的方法 应该更新problem的信息 应为会存在并发等问题
-    private static void updateAcmContestRank(JudgeTask judgeTask, ContestRuleType ruleType, BaseMapper<AcmContestRank> acmContestRankBaseMapper) {
+    private static void updateAcmContestRank(JudgeTask judgeTask, BaseMapper<AcmContestRank> acmContestRankBaseMapper) {
         ContestRank contestRank = judgeTask.getContestRank();
         Submission submission = judgeTask.getSubmission();
         Problem problem = judgeTask.getProblem();
         Contest contest = problem.getContest();
         Integer submissionResult = submission.getResult();
+        AcmContestRank rank = (AcmContestRank) contestRank;
         ContestSubmissionInfo info;
 
         String submissionInfoStr = contestRank.getSubmissionInfo();
@@ -220,6 +222,7 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
 
         String problemId = problem.getId();
 //        此题提交过
+
         if (submissionInfo.containsKey(problemId)) {
             info = submissionInfo.get(problemId);
             if (info.getIsAc()) {
@@ -229,18 +232,15 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
             contestRank.setSubmissionNumber(contestRank.getSubmissionNumber() + 1);
 
             if (submissionResult.equals(Integer.parseInt(JudgeStatus.ACCEPTED.getCode()))) {
-                if (ContestRuleType.ACM.getCode().equals(judgeTask.getRuleType())) {
-                    AcmContestRank rank = (AcmContestRank) contestRank;
-                    double v = Duration.between(submission.getCreateTime(), contest.getStartTime()).toNanos() / 1_000_000_000.0;
-                    info.setIsAc(Boolean.TRUE)
-                            .setAcTime((float) (v));
-                    rank.setAcceptedNumber(rank.getAcceptedNumber() + 1)
-                            .setTotalTime(info.getAcTime() + info.getErrorNumber() * 20 * 60);
+                double v = Duration.between(submission.getCreateTime(), contest.getStartTime()).toNanos() / 1_000_000_000.0;
+                info.setIsAc(Boolean.TRUE)
+                        .setAcTime((float) (v));
+                rank.setAcceptedNumber(rank.getAcceptedNumber() + 1)
+                        .setTotalTime(info.getAcTime() + info.getErrorNumber() * 20 * 60);
 
 //                    在updateContestProblemStatus此函数处 已对problem的AC数量做了更改
-                    if (problem.getAcceptedNumber().equals(JudgeConstant.FIRST_AC)) {
-                        info.setIsFirstAc(Boolean.TRUE);
-                    }
+                if (problem.getAcceptedNumber().equals(JudgeConstant.FIRST_AC)) {
+                    info.setIsFirstAc(Boolean.TRUE);
                 }
 
             } else if (!submissionResult.equals(Integer.parseInt(JudgeStatus.COMPILE_ERROR.getCode()))) {
@@ -256,19 +256,18 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
                     .isFirstAc(Boolean.FALSE).build();
 
             if (submissionResult.equals(Integer.parseInt(JudgeStatus.ACCEPTED.getCode()))) {
-                if (ContestRuleType.ACM.getCode().equals(judgeTask.getRuleType())) {
-                    AcmContestRank rank = (AcmContestRank) contestRank;
-                    rank.setAcceptedNumber(rank.getAcceptedNumber() + 1);
 
-                    info.setIsAc(Boolean.TRUE)
-                            .setAcTime(info.getAcTime() + info.getErrorNumber() * 20 * 60);
-                    rank.setTotalTime(info.getAcTime() + rank.getTotalTime());
+                rank.setAcceptedNumber(rank.getAcceptedNumber() + 1);
+
+                info.setIsAc(Boolean.TRUE)
+                        .setAcTime(info.getAcTime() + info.getErrorNumber() * 20 * 60);
+                rank.setTotalTime(info.getAcTime() + rank.getTotalTime());
 
 //                    在updateContestProblemStatus此函数处 已对problem的AC数量做了更改
-                    if (problem.getAcceptedNumber().equals(JudgeConstant.FIRST_AC)) {
-                        info.setIsFirstAc(Boolean.TRUE);
-                    }
+                if (problem.getAcceptedNumber().equals(JudgeConstant.FIRST_AC)) {
+                    info.setIsFirstAc(Boolean.TRUE);
                 }
+
             } else if (!submissionResult.equals(Integer.parseInt(JudgeStatus.COMPILE_ERROR.getCode()))) {
                 info.setErrorNumber(info.getErrorNumber() + 1);
             }
@@ -277,10 +276,35 @@ public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
         submissionInfo.put(String.valueOf(updateId), info);
         String jsonString = JSON.toJSONString(submissionInfo);
         contestRank.setSubmissionInfo(jsonString);
-        AcmContestRank rank = (AcmContestRank) contestRank;
 
-        if (ContestRuleType.ACM.getCode().equals(judgeTask.getRuleType())) {
-            acmContestRankBaseMapper.updateById(rank);
+        acmContestRankBaseMapper.updateById(rank);
+    }
+
+    public static void updateOiContestRank(JudgeTask judgeTask,BaseMapper<OiContestRank> oiMapper) {
+        Problem problem = judgeTask.getProblem();
+        String problemId = problem.getId();
+        ContestRank contestRank = judgeTask.getContestRank();
+        Submission submission = judgeTask.getSubmission();
+        String staticInfo = submission.getStaticInfo();
+        OiContestRank rank = (OiContestRank) contestRank;
+
+        JudgeStaticInfo judgeStaticInfo = judgeTask.getJudgeStaticInfo();
+        Integer currentScore = judgeStaticInfo.getScore();
+
+        String submissionInfo = rank.getSubmissionInfo();
+        Map<String, Integer> infoMap = JSON.parseObject(submissionInfo, new TypeReference<>() {
+        });
+        Integer lastScore = infoMap.get(problemId);
+
+//        TODO lastScore的赋值 好像并没有 三方类代替下方判断
+        if (!lastScore.equals(CommonConstant.FALSE)) {
+            rank.setTotalScore(rank.getTotalScore() - lastScore + currentScore);
+        } else {
+            rank.setTotalScore(rank.getTotalScore() + currentScore);
         }
+        infoMap.put(problemId, currentScore);
+        String jsonString = JSON.toJSONString(infoMap);
+        rank.setSubmissionInfo(jsonString);
+        oiMapper.updateById(rank);
     }
 }

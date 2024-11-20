@@ -8,7 +8,9 @@ public class ContestRank {
     private Integer id;
     private Integer submissionNumber;
     /**
-     * @see ContestSubmissionInfos
+     * acm模式下格式如下
+     * @see ContestSubmissionInfo
+     * Map<String, ContestSubmissionInfo>
      *  {
      *   "373": {
      *     "is_ac": false,
@@ -23,6 +25,7 @@ public class ContestRank {
      *     "error_number": 1
      *   }
      * }
+     * oi模式下为 Map<String,Integer>
      */
     private String submissionInfo;
     private Integer contestId;
