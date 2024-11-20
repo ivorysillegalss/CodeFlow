@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-public class UpdateContestInfoTask implements TaskNodeModel<JudgeTask> {
+public class UpdateContestProblemInfoTask implements TaskNodeModel<JudgeTask> {
 
     @Resource
     private UserProfileMapper userProfileMapper;

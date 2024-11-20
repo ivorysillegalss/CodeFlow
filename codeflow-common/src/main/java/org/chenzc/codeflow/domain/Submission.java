@@ -36,6 +36,9 @@ public class Submission {
      */
     private Integer result;
 
+//    TODO set赋值
+    private Integer lastResult;
+
     /**
      * JSON字符串 代表用户答题情况 格式为
      * <p></p>

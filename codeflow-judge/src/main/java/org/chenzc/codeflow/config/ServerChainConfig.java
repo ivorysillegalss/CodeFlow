@@ -28,16 +28,16 @@ public class ServerChainConfig {
     private ParseRespTask parseRespTask;
 
     @Resource
-    private UpdateContestInfoTask updateContestInfoTask;
+    private UpdateContestProblemInfoTask updateContestProblemInfoTask;
 
     @Resource
-    private UpdateProblemInfoTask updateProblemInfoTask;
+    private UpdateNormalProblemInfoTask updateNormalProblemInfoTask;
 
     @Bean("judgeTemplate")
     public TaskTemplate judgeTemplate() {
         return TaskTemplate.builder()
                 .taskTemplate(Arrays.asList(collectOptionsTask, assembleDataTask, executeJudgeTask
-                        , parseRespTask, updateContestInfoTask, updateProblemInfoTask))
+                        , parseRespTask, updateContestProblemInfoTask, updateNormalProblemInfoTask))
                 .build();
     }
 
