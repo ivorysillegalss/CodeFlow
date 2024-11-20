@@ -2,7 +2,7 @@ package org.chenzc.codeflow.config;
 
 import jakarta.annotation.Resource;
 import org.chenzc.codeflow.enums.BusinessEnums;
-import org.chenzc.codeflow.task.CollectOptionsTask;
+import org.chenzc.codeflow.task.*;
 import org.chenzc.codeflow.template.TaskController;
 import org.chenzc.codeflow.template.TaskTemplate;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +18,26 @@ public class ServerChainConfig {
     @Resource
     private CollectOptionsTask collectOptionsTask;
 
+    @Resource
+    private AssembleDataTask assembleDataTask;
+
+    @Resource
+    private ExecuteJudgeTask executeJudgeTask;
+
+    @Resource
+    private ParseRespTask parseRespTask;
+
+    @Resource
+    private UpdateContestInfoTask updateContestInfoTask;
+
+    @Resource
+    private UpdateProblemInfoTask updateProblemInfoTask;
+
     @Bean("judgeTemplate")
     public TaskTemplate judgeTemplate() {
         return TaskTemplate.builder()
-                .taskTemplate(Arrays.asList(collectOptionsTask))
+                .taskTemplate(Arrays.asList(collectOptionsTask, assembleDataTask, executeJudgeTask
+                        , parseRespTask, updateContestInfoTask, updateProblemInfoTask))
                 .build();
     }
 
