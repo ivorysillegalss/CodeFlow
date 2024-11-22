@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 
-//TODO 找一个compile_err的实例验证一下
 public class JudgeStaticInfo {
     private Integer timeCost;
     private Integer memoryCost;

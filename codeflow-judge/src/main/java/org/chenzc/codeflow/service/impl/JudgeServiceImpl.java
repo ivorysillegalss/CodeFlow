@@ -17,11 +17,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class JudgeServiceImpl implements JudgeService {
 
-//    TODO 再分割一层责任链
-
-    @Resource
-    private ServerUtil serverUtil;
-
     @Autowired
     @Qualifier(" JudgeProblemController")
     private TaskController taskController;
@@ -42,12 +37,8 @@ public class JudgeServiceImpl implements JudgeService {
                 .build();
 
         TaskContext<TaskContextData> taskContext = taskController.executeChain(judgeContext);
-
-//     TODO 返回做处理
-
-//        return BasicResult.builder().error(taskContext.getResponse().getError())
-//                .data(taskContext.getResponse().getData()).build();
-//
+        JudgeTask businessContextData = (JudgeTask) taskContext.getBusinessContextData();
+        log.info("判题任务结束 ：problemId: {} ", businessContextData.getProblem().getId());
     }
 
 }

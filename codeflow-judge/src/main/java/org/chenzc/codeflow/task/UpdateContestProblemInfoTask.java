@@ -76,8 +76,11 @@ public class UpdateContestProblemInfoTask implements TaskNodeModel<JudgeTask> {
             log.error("cannot find target user with id: {}", judgeTask.getUser().getId());
             return;
         }
-        Problem problem = judgeTask.getProblem();
+        List<Problem> problems = problemMapper.selectList(new QueryWrapper<Problem>().eq("id", judgeTask.getProblem().getId()));
+        Problem problem = CollUtil.getFirst(problems);
+        judgeTask.setProblem(problem);
         String problemId = problem.getId();
+
         Submission submission = judgeTask.getSubmission();
         Integer submissionResult = submission.getResult();
         UserProfile userProfile = CollUtil.getFirst(users);
@@ -159,7 +162,11 @@ public class UpdateContestProblemInfoTask implements TaskNodeModel<JudgeTask> {
     }
 
     private void updateContestRank(JudgeTask judgeTask) {
-        Problem problem = judgeTask.getProblem();
+
+        List<Problem> problems = problemMapper.selectList(new QueryWrapper<Problem>().eq("id", judgeTask.getProblem().getId()));
+        Problem problem = CollUtil.getFirst(problems);
+        judgeTask.setProblem(problem);
+
         Contest contest = problem.getContest();
         String ruleType = contest.getRuleType();
         Submission submission = judgeTask.getSubmission();
@@ -205,10 +212,14 @@ public class UpdateContestProblemInfoTask implements TaskNodeModel<JudgeTask> {
 
 
     //        调用这个地方的方法 应该更新problem的信息 应为会存在并发等问题
-    private static void updateContestRank(JudgeTask judgeTask, AcmContestRankMapper acmContestRankMapper, OiContestRankMapper oiContestRankMapper) {
+    private void updateContestRank(JudgeTask judgeTask, AcmContestRankMapper acmContestRankMapper, OiContestRankMapper oiContestRankMapper) {
         ContestRank contestRank = judgeTask.getContestRank();
         Submission submission = judgeTask.getSubmission();
-        Problem problem = judgeTask.getProblem();
+
+        List<Problem> problems = problemMapper.selectList(new QueryWrapper<Problem>().eq("id", judgeTask.getProblem().getId()));
+        Problem problem = CollUtil.getFirst(problems);
+        judgeTask.setProblem(problem);
+
         Contest contest = problem.getContest();
         Integer submissionResult = submission.getResult();
         ContestSubmissionInfo info;

@@ -23,7 +23,6 @@ public class Contest {
     private Boolean visible;
     private Integer createdById;
     private String allowedIpRanges;
-//    TODO
     private String contestType;
     private String status;
 }

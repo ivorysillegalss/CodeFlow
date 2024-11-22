@@ -34,7 +34,6 @@ public class TaskController {
         TaskTemplate taskTemplate = taskTemplates.get(taskContext.getBusinessCode());
         List<TaskNodeModel> taskList = taskTemplate.get();
         for (TaskNodeModel task : taskList) {
-//            TODO
             task.execute(taskContext);
             if (taskContext.getException()) {
                 return taskContext;

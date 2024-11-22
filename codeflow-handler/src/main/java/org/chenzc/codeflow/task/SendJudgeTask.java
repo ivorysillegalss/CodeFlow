@@ -31,7 +31,6 @@ public class SendJudgeTask implements TaskNodeModel<CommitTask> {
 
         judgeExecutor.execute(() -> {
             judgeService.send(commitTask);
-//            TODO rpc
         });
 
 

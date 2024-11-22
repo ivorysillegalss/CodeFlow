@@ -13,7 +13,6 @@ public enum TaskEnums {
     FAIL("-1","操作失败"),
     EXECUTING("100","责任链执行中");
 
-//    TODO  这里可以为现有的业务对应业务名新增到枚举类当中
 
     private final String code;
     private final String msg;

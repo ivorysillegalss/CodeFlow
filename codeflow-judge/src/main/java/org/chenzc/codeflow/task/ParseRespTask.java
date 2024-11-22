@@ -1,6 +1,8 @@
 package org.chenzc.codeflow.task;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenzc.codeflow.enums.JudgeStatus;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.chenzc.codeflow.domain.*;
 import org.chenzc.codeflow.entity.TaskContext;
 import org.chenzc.codeflow.enums.ProblemRuleType;
 import org.chenzc.codeflow.executor.TaskNodeModel;
+import org.chenzc.codeflow.mapper.ProblemMapper;
 import org.chenzc.codeflow.mapper.SubmissionMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,9 @@ public class ParseRespTask implements TaskNodeModel<JudgeTask> {
 
     @Resource
     private SubmissionMapper submissionMapper;
+
+    @Resource
+    private ProblemMapper problemMapper;
 
     @Override
     public void execute(TaskContext<JudgeTask> taskContext) {
@@ -45,7 +51,11 @@ public class ParseRespTask implements TaskNodeModel<JudgeTask> {
             data.sort((s1, s2) -> Integer.compare(Integer.parseInt(s1.getTestCase()),
                     Integer.parseInt(s2.getTestCase())));
 
-            judgeStaticInfo = computeStaticInfo(data, submission, judgeTask.getProblem());
+            List<Problem> problems = problemMapper.selectList(new QueryWrapper<Problem>().eq("id", judgeTask.getProblem().getId()));
+            Problem problem = CollUtil.getFirst(problems);
+            judgeTask.setProblem(problem);
+
+            judgeStaticInfo = computeStaticInfo(data, submission, problem);
 
             List<Integer> errorCaseIndexes = getErrorCaseIndex(data);
             if (errorCaseIndexes.isEmpty()) {
