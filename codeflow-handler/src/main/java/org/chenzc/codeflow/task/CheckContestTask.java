@@ -16,7 +16,7 @@ import org.chenzc.codeflow.executor.TaskNodeModel;
 import org.chenzc.codeflow.mapper.ContestMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -86,9 +86,9 @@ public class CheckContestTask implements TaskNodeModel<CommitTask> {
     }
 
     public static void setContestStatus(Contest contest) {
-        if (contest.getStartTime().isAfter(LocalDateTime.now()))
+        if (contest.getStartTime().isAfter(OffsetDateTime.now()))
             contest.setStatus(ContestStatus.CONTEST_NOT_START.getCode());
-        else if (contest.getEndTime().isBefore(LocalDateTime.now())) {
+        else if (contest.getEndTime().isBefore(OffsetDateTime.now())) {
             contest.setStatus(ContestStatus.CONTEST_ENDED.getCode());
         } else contest.setStatus(ContestStatus.CONTEST_UNDERWAY.getCode());
     }

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,10 +16,10 @@ public class Contest {
     private Boolean realTimeRank;
     private String password;
     private String ruleType;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private LocalDateTime createTime;
-    private LocalDateTime lastUpdateTime;
+    private OffsetDateTime startTime;
+    private OffsetDateTime endTime;
+    private OffsetDateTime createTime;
+    private OffsetDateTime lastUpdateTime;
     private Boolean visible;
     private Integer createdById;
     private String allowedIpRanges;

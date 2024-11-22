@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @AllArgsConstructor
@@ -13,12 +13,12 @@ public class User {
     private Integer id;
     private String username;
     private String password;
-    private LocalDateTime lastLogin;
+    private OffsetDateTime lastLogin;
     private String email;
-    private LocalDateTime createTime;
+    private OffsetDateTime createTime;
     private String adminType;
     private String resetPasswordToken;
-    private LocalDateTime resetPasswordTokenExpireTime;
+    private OffsetDateTime resetPasswordTokenExpireTime;
     private String authToken;
     private Boolean twoFactorAuth;
     private String tfaToken;

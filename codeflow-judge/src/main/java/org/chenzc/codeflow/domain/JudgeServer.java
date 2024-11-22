@@ -2,7 +2,7 @@ package org.chenzc.codeflow.domain;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class JudgeServer {
@@ -13,8 +13,8 @@ public class JudgeServer {
     private Integer cpuCore;
     private Float memoryUsage;
     private Float cpuUsage;
-    private LocalDateTime lastHeartbeat;
-    private LocalDateTime createTime;
+    private OffsetDateTime lastHeartbeat;
+    private OffsetDateTime createTime;
     private Integer taskNumber;
     private String serviceUrl;
     private Boolean isDisabled;

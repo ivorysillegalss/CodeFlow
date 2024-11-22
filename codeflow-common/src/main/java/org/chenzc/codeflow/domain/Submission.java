@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Accessors(chain = true)
@@ -13,7 +13,7 @@ public class Submission {
     private String id;
     private Integer contestId;
     private Integer problemId;
-    private LocalDateTime createTime;
+    private OffsetDateTime createTime;
     private Integer userId;
 
     private String code;

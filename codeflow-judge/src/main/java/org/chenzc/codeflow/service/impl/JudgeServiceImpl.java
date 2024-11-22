@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class JudgeServiceImpl implements JudgeService {
 
     @Autowired
-    @Qualifier(" JudgeProblemController")
+    @Qualifier("JudgeProblemController")
     private TaskController taskController;
 
     @Override

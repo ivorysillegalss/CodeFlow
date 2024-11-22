@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Component
@@ -24,7 +24,6 @@ public class ServerUtil {
     private JudgeServerMapper judgeServerMapper;
 
     @Transactional
-    @Bean
     public JudgeServer getJudgeServer() {
         QueryWrapper<JudgeServer> qw = new QueryWrapper<>();
         qw.orderBy(true, true, "task_number");
@@ -50,7 +49,6 @@ public class ServerUtil {
     }
 
     @Transactional
-    @Bean
     public void afterJudgeServerGet(JudgeServer server) {
         server.setTaskNumber(server.getTaskNumber() - 1);
         judgeServerMapper.updateById(server);
@@ -58,7 +56,7 @@ public class ServerUtil {
 
 
     private String getJudgeServerStatus(JudgeServer server) {
-        Duration duration = Duration.between(LocalDateTime.now(), server.getLastHeartbeat());
+        Duration duration = Duration.between(OffsetDateTime.now(), server.getLastHeartbeat());
         if (duration.getSeconds() > 6L) {
             return JudgeConstant.SERVER_ABNORMAL_STATUS;
         }

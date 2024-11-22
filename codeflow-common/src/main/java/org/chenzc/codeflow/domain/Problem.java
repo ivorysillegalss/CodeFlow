@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+
 
 @Data
 @Builder
@@ -30,8 +31,8 @@ public class Problem {
 //    序列化后成为json键值对字符串
     private String template;
 
-    private LocalDateTime createTime;
-    private LocalDateTime lastUpdateTime;
+    private OffsetDateTime createTime;
+    private OffsetDateTime lastUpdateTime;
 
     private Integer timeLimit;
     private Integer memoryLimit;
